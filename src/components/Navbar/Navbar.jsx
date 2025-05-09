@@ -6,10 +6,15 @@ const Navbar = () => {
   const [isMenuOpened, setMenuOpened] = useState(false);
   const [isMyCartDropdownOpened, setMyCartDropdownOpened] = useState(false);
   const [isUserDropdownOpened, setUserDropdownOpened] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const menuRef = useRef();
   const myCartRef = useRef();
   const userRef = useRef();
+
+  const toggleSignIn = () => {
+    setIsSignedIn((prev) => !prev);
+  };
 
   const toggleMenu = () => {
     setMenuOpened((prev) => !prev);
@@ -153,7 +158,7 @@ const Navbar = () => {
           </form>
 
           <div className="flex items-center lg:space-x-2">
-            <div className="flex-col">
+            <div className={`${!isSignedIn ? 'hidden' : ''} flex-col`}>
               <button
                 id="myCartDropdownButton1"
                 onClick={toggleMyCartDropdown}
@@ -462,91 +467,104 @@ const Navbar = () => {
                 </a>
               </div>
             </div>
-            <div className="flex-col">
+
+            {!isSignedIn ? (
               <button
-                id="userDropdownButton1"
-                onClick={toggleUserDropdown}
-                data-dropdown-toggle="userDropdown1"
+                id="SignInButton"
+                onClick={toggleSignIn}
                 type="button"
-                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+                className="bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 text-white font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                <svg
-                  className="w-5 h-5 me-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
-                Account
-                <svg
-                  className="w-4 h-4 text-gray-900 dark:text-white ms-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 9-7 7-7-7"
-                  />
-                </svg>
+                Sign In
               </button>
-
-              <div
-                id="userDropdown1"
-                ref={userRef}
-                className={`absolute z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700 ${
-                  isUserDropdownOpened ? 'block' : 'hidden'
-                }`}
-              >
-                <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
-                  <li>
-                    <a
-                      href="#"
-                      title=""
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {' '}
-                      My Account{' '}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      title=""
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {' '}
-                      My Orders{' '}
-                    </a>
-                  </li>
-                </ul>
-
-                <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
-                  <a
-                    href="#"
-                    title=""
-                    className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+            ) : (
+              <div className="flex-col">
+                <button
+                  id="userDropdownButton1"
+                  onClick={toggleUserDropdown}
+                  data-dropdown-toggle="userDropdown1"
+                  type="button"
+                  className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+                >
+                  <svg
+                    className="w-5 h-5 me-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
                   >
-                    {' '}
-                    Sign Out{' '}
-                  </a>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                  Account
+                  <svg
+                    className="w-4 h-4 text-gray-900 dark:text-white ms-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 9-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                <div
+                  id="userDropdown1"
+                  ref={userRef}
+                  className={`absolute z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700 ${
+                    isUserDropdownOpened ? 'block' : 'hidden'
+                  }`}
+                >
+                  <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+                    <li>
+                      <a
+                        href="#"
+                        title=""
+                        className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >
+                        {' '}
+                        My Account{' '}
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        title=""
+                        className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >
+                        {' '}
+                        My Orders{' '}
+                      </a>
+                    </li>
+                  </ul>
+
+                  <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <a
+                      href="#"
+                      title=""
+                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      onClick={toggleSignIn}
+                    >
+                      {' '}
+                      Sign Out{' '}
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <button
               type="button"
