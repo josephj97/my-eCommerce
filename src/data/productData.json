@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "title": "Apple iMac 27\", 1TB HDD, Retina 5K Display, M3 Max",
+    "price": 1699,
+    "discount": "Up to 35% off",
+    "rating": 5.0,
+    "reviewsCount": 455,
+    "features": ["Fast Delivery", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
+    },
+    "description": "The Apple iMac 27\" with M3 Max chip delivers stunning performance on a breathtaking 5K Retina display. Featuring 1TB of storage, this all-in-one desktop computer is perfect for creative professionals and power users who demand the best in performance and visual clarity."
+  },
+  {
+    "id": 2,
+    "title": "Apple iPhone 15 Pro Max, 256GB, Blue Titanium",
+    "price": 1199,
+    "discount": "Up to 15% off",
+    "rating": 4.9,
+    "reviewsCount": 1233,
+    "features": ["Best Seller", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-light.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-dark.svg"
+    },
+    "description": "The iPhone 15 Pro Max in sleek Blue Titanium features our most advanced camera system, A17 Pro chip for next-level performance, and a durable aerospace-grade titanium design. With 256GB storage, it's perfect for capturing high-quality photos and videos on the go."
+  },
+  {
+    "id": 3,
+    "title": "iPad Pro 13-Inch (M4): XDR Display, 512GB",
+    "price": 799,
+    "discount": "Up to 35% off",
+    "rating": 4.9,
+    "reviewsCount": 879,
+    "features": ["Shipping Today", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-light.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-dark.svg"
+    },
+    "description": "The 13-inch iPad Pro with M4 chip and stunning XDR display redefines what's possible on a tablet. With 512GB storage, it delivers desktop-class performance for creative work, gaming, and productivity, all in an ultra-portable design with all-day battery life."
+  },
+  {
+    "id": 4,
+    "title": "PlayStation®5 Console – 1TB, PRO Controller",
+    "price": 499,
+    "discount": "Up to 10% off",
+    "rating": 4.8,
+    "reviewsCount": 2957,
+    "features": ["Fast Delivery", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-light.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg"
+    },
+    "description": "Experience lightning-fast loading with the PlayStation®5 console's ultra-high speed SSD, deeper immersion with haptic feedback, adaptive triggers and 3D Audio. Includes 1TB storage and a PRO controller for the ultimate gaming experience."
+  },
+  {
+    "id": 5,
+    "title": "Microsoft Xbox Series X 1TB Gaming Console",
+    "price": 499,
+    "discount": "Up to 10% off",
+    "rating": 4.8,
+    "reviewsCount": 4263,
+    "features": ["Best Seller", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/xbox-light.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/xbox-dark.svg"
+    },
+    "description": "The Xbox Series X offers next-gen speed and performance with 12 teraflops of power, 1TB SSD storage, and compatibility with thousands of games across four generations. Experience true 4K gaming with faster load times and quick resume for multiple games."
+  },
+  {
+    "id": 6,
+    "title": "Apple MacBook PRO Laptop with M2 chip",
+    "price": 2599,
+    "discount": "Up to 5% off",
+    "rating": 4.9,
+    "reviewsCount": 1076,
+    "features": ["Fast Delivery", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/macbook-pro-light.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/macbook-pro-dark.svg"
+    },
+    "description": "The MacBook Pro with M2 chip delivers exceptional performance and battery life in a compact design. Featuring a brilliant Retina display, advanced thermal design, and studio-quality mics, it's the perfect laptop for professionals on the move."
+  },
+  {
+    "id": 7,
+    "title": "Apple Watch SE [GPS 40mm], Smartwatch",
+    "price": 699,
+    "discount": "Up to 20% off",
+    "rating": 4.7,
+    "reviewsCount": 387,
+    "features": ["Fast Delivery", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-light.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-dark.svg"
+    },
+    "description": "The Apple Watch SE combines essential features with an affordable price. Track your fitness, receive notifications, and use safety features like Fall Detection and Emergency SOS. The 40mm size fits most wrists comfortably."
+  },
+  {
+    "id": 8,
+    "title": "Microsoft Surface Pro, Copilot+ PC, 13 Inch",
+    "price": 899,
+    "discount": "Up to 35% off",
+    "rating": 4.9,
+    "reviewsCount": 4775,
+    "features": ["Fast Delivery", "Best Price"],
+    "images": {
+      "light": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard.svg",
+      "dark": "https://flowbite.s3.amazonaws.com/blocks/e-commerce/ipad-keyboard-dark.svg"
+    },
+    "description": "The Microsoft Surface Pro is a versatile Copilot+ PC that transforms from tablet to laptop with the iconic Kickstand and Type Cover. Featuring a 13-inch touchscreen, all-day battery life, and premium performance for work and play."
+  }
+]
