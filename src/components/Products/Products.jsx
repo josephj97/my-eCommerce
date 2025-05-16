@@ -266,7 +266,7 @@ const Products = () => {
           action="#"
           method="get"
           id="filterModal"
-          tabindex="-1"
+          tabIndex="-1"
           aria-hidden="true"
           className="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full"
         >
@@ -304,7 +304,7 @@ const Products = () => {
                 </button>
               </div>
               {/* <!-- Modal body --> */}
-              <div className="px-4 md:px-5">
+              {/* <div className="px-4 md:px-5">
                 <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
                   <ul
                     className="-mb-px flex flex-wrap text-center text-sm font-medium"
@@ -1810,7 +1810,7 @@ const Products = () => {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* <!-- Modal footer --> */}
               <div className="flex items-center space-x-4 rounded-b p-4 dark:border-gray-600 md:p-5">
