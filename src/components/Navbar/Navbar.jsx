@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../../context/CartContext';
 
 const Navbar = () => {
   const [isMenuOpened, setMenuOpened] = useState(false);
@@ -11,6 +12,13 @@ const Navbar = () => {
   const menuRef = useRef();
   const myCartRef = useRef();
   const userRef = useRef();
+
+  const { cartItems, removeFromCart } = useContext(CartContext);
+  const limitedCartItems = cartItems.slice(0, 5);
+
+  const handleRemoveItem = (itemId) => {
+    removeFromCart(itemId);
+  };
 
   const toggleSignIn = () => {
     setIsSignedIn((prev) => !prev);
@@ -159,33 +167,34 @@ const Navbar = () => {
 
           <div className="flex items-center lg:space-x-2">
             <div className={`${!isSignedIn ? 'hidden' : ''} flex-col`}>
-              <button
-                id="myCartDropdownButton1"
-                onClick={toggleMyCartDropdown}
-                data-dropdown-toggle="myCartDropdown1"
-                type="button"
-                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
-              >
-                <span className="sr-only">Cart</span>
-                <svg
-                  className="w-5 h-5 lg:me-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+              <a href="/cart">
+                <button
+                  id="myCartDropdownButton1"
+                  // onClick={toggleMyCartDropdown}
+                  data-dropdown-toggle="myCartDropdown1"
+                  type="button"
+                  className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
-                  />
-                </svg>
-                <span className="hidden sm:flex">My Cart</span>
-                <svg
+                  <span className="sr-only">Cart</span>
+                  <svg
+                    className="w-5 h-5 lg:me-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+                    />
+                  </svg>
+                  <span className="hidden sm:flex">My Cart</span>
+                  {/* <svg
                   className="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -201,8 +210,9 @@ const Navbar = () => {
                     strokeWidth="2"
                     d="m19 9-7 7-7-7"
                   />
-                </svg>
-              </button>
+                </svg> */}
+                </button>
+              </a>
 
               <div
                 id="myCartDropdown1"
@@ -211,7 +221,7 @@ const Navbar = () => {
                   isMyCartDropdownOpened ? 'block' : 'hidden'
                 }`}
               >
-                <div className="grid grid-cols-2">
+                {/* <div className="grid grid-cols-2">
                   <div>
                     <a
                       href="#"
@@ -454,25 +464,96 @@ const Navbar = () => {
                       <div className="tooltip-arrow" data-popper-arrow></div>
                     </div>
                   </div>
-                </div>
-                <a
-                  href="#"
-                  title=""
-                  className="mb-2 me-2 inline-flex w-full items-center justify-center rounded-lg bg-gray-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                  role="button"
-                >
-                  Show All Items
-                </a>
+                </div> */}
+                {cartItems.length > 0 ? (
+                  <>
+                    {limitedCartItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className="grid grid-cols-2 items-start"
+                      >
+                        <div>
+                          <a
+                            href={`/product/${item.id}`} // Link to product page
+                            className="truncate text-sm font-semibold leading-none text-gray-900 dark:text-white hover:underline"
+                          >
+                            {/* {item.title} */}
+                            <abbr title={item.title}>
+                              {item.title.length > 20
+                                ? item.title.substring(0, 20) + '...'
+                                : item.title}
+                            </abbr>
+                          </a>
+                          <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
+                            $
+                            {typeof item.price === 'number'
+                              ? item.price.toFixed(2)
+                              : '0.00'}
+                          </p>
+                        </div>
 
-                <a
-                  href="#"
-                  title=""
-                  className="mb-2 me-2 inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  role="button"
-                >
-                  {' '}
-                  Go to my checkout{' '}
-                </a>
+                        <div className="flex items-start justify-end gap-6">
+                          <p className="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
+                            Qty: {item.quantity}
+                          </p>
+
+                          <button
+                            onClick={() => removeFromCart(item.id)}
+                            type="button"
+                            className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600"
+                          >
+                            <span className="sr-only"> Remove </span>
+                            <svg
+                              className="h-4 w-4"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm7.7-3.7a1 1 0 0 0-1.4 1.4l2.3 2.3-2.3 2.3a1 1 0 1 0 1.4 1.4l2.3-2.3 2.3 2.3a1 1 0 0 0 1.4-1.4L13.4 12l2.3-2.3a1 1 0 0 0-1.4-1.4L12 10.6 9.7 8.3Z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {cartItems.length > 5 && (
+                      <div className="p-4">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          And {cartItems.length - 5} more item(s)
+                        </p>
+                      </div>
+                    )}
+                    <div className="p-4">
+                      <a
+                        href="/cart" // Link to your full cart page
+                        className="w-full inline-flex items-center justify-center rounded-lg bg-gray-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                        role="button"
+                      >
+                        Show All Items
+                      </a>
+                    </div>
+
+                    <div className="p-4">
+                      <a
+                        href="/checkout" //  Link to your checkout page
+                        className="w-full inline-flex items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                        role="button"
+                      >
+                        Go to my checkout
+                      </a>
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-4">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Your cart is empty.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
