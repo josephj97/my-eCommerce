@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import productData from '../../data/productData.json'; // Sample JSON data
 import CartIcon from '../Icons/CartIcon';
 import HeartIcon from '../Icons/HeartIcon';
+import { useCart } from '../../context/CartContext';
 
 const ProductDetail = () => {
   const { id } = useParams(); // Extract ID from URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const { addToCart } = useCart();
 
   useEffect(() => {
     // Simulate API fetch (replace with real fetch if needed)
@@ -80,10 +83,14 @@ const ProductDetail = () => {
 
             {/* Buttons */}
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <button className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+              {/* Add to favorites button */}
+              {/* <button className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <HeartIcon /> Add to favorites
-              </button>
-              <button className="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 flex items-center justify-center">
+              </button> */}
+              <button
+                className="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 flex items-center justify-center"
+                onClick={() => addToCart(product)}
+              >
                 <CartIcon /> Add to cart
               </button>
             </div>
