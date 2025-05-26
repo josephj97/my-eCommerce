@@ -1,13 +1,28 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import { IoCartOutline } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
-import { CartContext } from '../../context/CartContext';
+import React, { useRef, useState, useEffect, useContext } from "react";
+import { IoCartOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpened, setMenuOpened] = useState(false);
   const [isMyCartDropdownOpened, setMyCartDropdownOpened] = useState(false);
   const [isUserDropdownOpened, setUserDropdownOpened] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      alert("Failed to log out. Please try again.");
+    }
+  };
 
   const menuRef = useRef();
   const myCartRef = useRef();
@@ -18,10 +33,6 @@ const Navbar = () => {
 
   const handleRemoveItem = (itemId) => {
     removeFromCart(itemId);
-  };
-
-  const toggleSignIn = () => {
-    setIsSignedIn((prev) => !prev);
   };
 
   const toggleMenu = () => {
@@ -43,10 +54,10 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuRef]);
 
@@ -57,10 +68,10 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [myCartRef]);
 
@@ -71,10 +82,10 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [userRef]);
 
@@ -166,7 +177,7 @@ const Navbar = () => {
           </form>
 
           <div className="flex items-center lg:space-x-2">
-            <div className={`${!isSignedIn ? 'hidden' : ''} flex-col`}>
+            <div className={"flex-col"}>
               <a href="/cart">
                 <button
                   id="myCartDropdownButton1"
@@ -218,7 +229,7 @@ const Navbar = () => {
                 id="myCartDropdown1"
                 ref={myCartRef}
                 className={`absolute z-10 mx-auto max-w-sm space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-800 ${
-                  isMyCartDropdownOpened ? 'block' : 'hidden'
+                  isMyCartDropdownOpened ? "block" : "hidden"
                 }`}
               >
                 {/* <div className="grid grid-cols-2">
@@ -480,15 +491,15 @@ const Navbar = () => {
                             {/* {item.title} */}
                             <abbr title={item.title}>
                               {item.title.length > 20
-                                ? item.title.substring(0, 20) + '...'
+                                ? item.title.substring(0, 20) + "..."
                                 : item.title}
                             </abbr>
                           </a>
                           <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
                             $
-                            {typeof item.price === 'number'
+                            {typeof item.price === "number"
                               ? item.price.toFixed(2)
-                              : '0.00'}
+                              : "0.00"}
                           </p>
                         </div>
 
@@ -557,103 +568,92 @@ const Navbar = () => {
               </div>
             </div>
 
-            {!isSignedIn ? (
+            <div className="flex-col">
               <button
-                id="SignInButton"
-                onClick={toggleSignIn}
+                id="userDropdownButton1"
+                onClick={toggleUserDropdown}
+                data-dropdown-toggle="userDropdown1"
                 type="button"
-                className="bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 text-white font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
               >
-                Sign In
+                <svg
+                  className="w-5 h-5 me-1"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+                Account
+                <svg
+                  className="w-4 h-4 text-gray-900 dark:text-white ms-1"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 9-7 7-7-7"
+                  />
+                </svg>
               </button>
-            ) : (
-              <div className="flex-col">
-                <button
-                  id="userDropdownButton1"
-                  onClick={toggleUserDropdown}
-                  data-dropdown-toggle="userDropdown1"
-                  type="button"
-                  className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
-                >
-                  <svg
-                    className="w-5 h-5 me-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    />
-                  </svg>
-                  Account
-                  <svg
-                    className="w-4 h-4 text-gray-900 dark:text-white ms-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 9-7 7-7-7"
-                    />
-                  </svg>
-                </button>
 
-                <div
-                  id="userDropdown1"
-                  ref={userRef}
-                  className={`absolute z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700 ${
-                    isUserDropdownOpened ? 'block' : 'hidden'
-                  }`}
-                >
-                  <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
-                    <li>
-                      <a
-                        href="#"
-                        title=""
-                        className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        {' '}
-                        My Account{' '}
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        title=""
-                        className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        {' '}
-                        My Orders{' '}
-                      </a>
-                    </li>
-                  </ul>
-
-                  <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
+              <div
+                id="userDropdown1"
+                ref={userRef}
+                className={`absolute z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700 ${
+                  isUserDropdownOpened ? "block" : "hidden"
+                }`}
+              >
+                <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+                  <li>
                     <a
                       href="#"
                       title=""
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                      onClick={toggleSignIn}
                     >
-                      {' '}
-                      Sign Out{' '}
+                      {" "}
+                      My Account{" "}
                     </a>
-                  </div>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      title=""
+                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                    >
+                      {" "}
+                      My Orders{" "}
+                    </a>
+                  </li>
+                </ul>
+
+                <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <a
+                    href="#"
+                    title=""
+                    className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                    onClick={handleLogout}
+                  >
+                    {" "}
+                    Sign Out{" "}
+                  </a>
                 </div>
               </div>
-            )}
+            </div>
 
             <button
               type="button"
@@ -688,7 +688,7 @@ const Navbar = () => {
           id="ecommerce-navbar-menu-1"
           ref={menuRef}
           className={`absolute right-0 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 px-4 mt-4 ${
-            isMenuOpened ? 'block' : 'hidden'
+            isMenuOpened ? "block" : "hidden"
           }`}
         >
           <ul className="text-gray-900 dark:text-white text-sm font-medium space-y-3">
