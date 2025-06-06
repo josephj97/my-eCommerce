@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase"; // Import the auth instance
+import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
-import ShowPasswordIcon from "../Icons/ShowPasswordIcon";
-import HidePasswordIcon from "../Icons/HidePasswordIcon";
+import ShowPasswordIcon from "../../assets/show-password.svg";
+import HidePasswordIcon from "../../assets/hide-password.svg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -85,7 +85,7 @@ const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="w-full relative">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -101,14 +101,12 @@ const LoginPage = () => {
                   required=""
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button
-                  type="button"
+                <img
+                  src={showPassword ? ShowPasswordIcon : HidePasswordIcon}
+                  alt={showPassword ? "Show password" : "Hide password"}
+                  className="absolute inset-y-0 right-0 flex items-center text-gray-600 focus:outline-none px-3 top-10"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 top-7"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <ShowPasswordIcon /> : <HidePasswordIcon />}
-                </button>
+                />
               </div>
               {/* <div className="flex items-center justify-between">
                 <a

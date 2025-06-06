@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase"; // Import the auth instance
+import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
-import ShowPasswordIcon from "../Icons/ShowPasswordIcon";
-import HidePasswordIcon from "../Icons/HidePasswordIcon";
+import ShowPasswordIcon from "../../assets/show-password.svg";
+import HidePasswordIcon from "../../assets/hide-password.svg";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const SignupPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div>
+                <div className="w-full relative">
                   <label
                     htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -114,18 +115,14 @@ const SignupPage = () => {
                     required=""
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <button
-                    type="button"
+                  <img
+                    src={showPassword ? ShowPasswordIcon : HidePasswordIcon}
+                    alt={showPassword ? "Show password" : "Hide password"}
+                    className="absolute inset-y-0 right-0 flex items-center text-gray-600 focus:outline-none px-3 top-9"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 top-7"
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                  >
-                    {showPassword ? <ShowPasswordIcon /> : <HidePasswordIcon />}
-                  </button>
+                  />
                 </div>
-                <div>
+                <div className="w-full relative">
                   <label
                     htmlFor="confirm-password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -133,13 +130,25 @@ const SignupPage = () => {
                     Confirm password
                   </label>
                   <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     name="confirm-password"
                     id="confirm-password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required=""
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <img
+                    src={
+                      showConfirmPassword ? ShowPasswordIcon : HidePasswordIcon
+                    }
+                    alt={
+                      showConfirmPassword
+                        ? "Show Confirm password"
+                        : "Hide Confirm password"
+                    }
+                    className="absolute inset-y-0 right-0 flex items-center text-gray-600 focus:outline-none px-3 top-9"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   />
                 </div>
                 <button
