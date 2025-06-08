@@ -1,16 +1,35 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import productData from '../../data/productData.json'; // Sample JSON data
-import CartIcon from '../Icons/CartIcon';
-import HeartIcon from '../Icons/HeartIcon';
-import { useCart } from '../../context/CartContext';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import productData from "../../data/productData.json"; // Sample JSON data
+import CartIcon from "../Icons/CartIcon";
+import HeartIcon from "../Icons/HeartIcon";
+import { useCart } from "../../context/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams(); // Extract ID from URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { addToCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
+
+  const itemInCart = cartItems.find((item) => item.id === product.id);
+  const quantityInCart = itemInCart ? itemInCart.quantity : 0;
+
+  const handleDecreseQuantity = () => {
+    if (quantityInCart > 1) {
+      updateQuantity(product.id, quantityInCart - 1);
+    } else {
+      removeFromCart(product.id);
+    }
+  };
+
+  const handleIncreaseQuantity = () => {
+    if (quantityInCart === 0) {
+      addToCart(product);
+    } else {
+      updateQuantity(product.id, quantityInCart + 1);
+    }
+  };
 
   useEffect(() => {
     // Simulate API fetch (replace with real fetch if needed)
@@ -82,18 +101,74 @@ const ProductDetail = () => {
             </div>
 
             {/* Buttons */}
-            <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              {/* Add to favorites button */}
-              {/* <button className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            {quantityInCart === 0 ? (
+              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                {/* Add to favorites button */}
+                {/* <button className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <HeartIcon /> Add to favorites
               </button> */}
-              <button
-                className="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 flex items-center justify-center"
-                onClick={() => addToCart(product)}
-              >
-                <CartIcon /> Add to cart
-              </button>
-            </div>
+                <button
+                  className="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 flex items-center justify-center"
+                  onClick={() => addToCart(product)}
+                >
+                  <CartIcon /> Add to cart
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <button
+                  type="button"
+                  // onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                  onClick={() => handleDecreseQuantity()}
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                >
+                  <svg
+                    className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 2"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 1h16"
+                    />
+                  </svg>
+                </button>
+                <input
+                  type="text"
+                  id={`counter-input-${product.id}`}
+                  className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+                  value={quantityInCart}
+                  readOnly
+                />
+                <button
+                  type="button"
+                  // onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                  onClick={() => handleIncreaseQuantity()}
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                >
+                  <svg
+                    className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </button>
+              </div>
+            )}
 
             <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 

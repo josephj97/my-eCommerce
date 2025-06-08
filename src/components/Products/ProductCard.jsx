@@ -1,10 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import CartIcon from '../Icons/CartIcon';
-import { useCart } from '../../context/CartContext';
+import React from "react";
+import { Link } from "react-router-dom";
+import CartIcon from "../Icons/CartIcon";
+import { useCart } from "../../context/CartContext";
 
 const ProductCard = ({ product }) => {
-  const { addToCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
+
+  const itemInCart = cartItems.find((item) => item.id === product.id);
+  const quantityInCart = itemInCart ? itemInCart.quantity : 0;
+
+  const handleDecreseQuantity = () => {
+    if (quantityInCart > 1) {
+      updateQuantity(product.id, quantityInCart - 1);
+    } else {
+      removeFromCart(product.id);
+    }
+  };
+  const handleIncreaseQuantity = () => {
+    if (quantityInCart === 0) {
+      addToCart(product);
+    } else {
+      updateQuantity(product.id, quantityInCart + 1);
+    }
+  };
+
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
       <div className="h-56 w-full">
@@ -146,14 +165,70 @@ const ProductCard = ({ product }) => {
           <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
             ${product.price}
           </p>
-          <button
-            type="button"
-            className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            onClick={() => addToCart(product)}
-          >
-            <CartIcon />
-            Add to cart
-          </button>
+          {quantityInCart === 0 ? (
+            <button
+              type="button"
+              className="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              onClick={() => addToCart(product)}
+            >
+              <CartIcon />
+              Add to cart
+            </button>
+          ) : (
+            <div className="flex items-center">
+              <button
+                type="button"
+                // onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                onClick={() => handleDecreseQuantity()}
+                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+              >
+                <svg
+                  className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 2"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1h16"
+                  />
+                </svg>
+              </button>
+              <input
+                type="text"
+                id={`counter-input-${product.id}`}
+                className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+                value={quantityInCart}
+                readOnly
+              />
+              <button
+                type="button"
+                // onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                onClick={() => handleIncreaseQuantity()}
+                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+              >
+                <svg
+                  className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 18"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 1v16M1 9h16"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
