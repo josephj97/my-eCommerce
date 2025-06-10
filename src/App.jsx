@@ -20,13 +20,6 @@ function App() {
     <>
       {!shouldHideNavbar && <Navbar />}
       <Routes>
-        <Route index element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/"
           element={
@@ -35,6 +28,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );
