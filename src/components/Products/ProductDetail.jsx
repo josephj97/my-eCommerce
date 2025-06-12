@@ -12,9 +12,6 @@ const ProductDetail = () => {
 
   const { cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
 
-  const itemInCart = cartItems.find((item) => item.id === product.id);
-  const quantityInCart = itemInCart ? itemInCart.quantity : 0;
-
   const handleDecreseQuantity = () => {
     if (quantityInCart > 1) {
       updateQuantity(product.id, quantityInCart - 1);
@@ -44,6 +41,9 @@ const ProductDetail = () => {
 
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found!</div>;
+
+  const itemInCart = cartItems.find((item) => item.id === product.id);
+  const quantityInCart = itemInCart ? itemInCart.quantity : 0;
 
   return (
     <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
